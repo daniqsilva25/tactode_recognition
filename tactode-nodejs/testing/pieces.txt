@@ -1,0 +1,8 @@
+control:end_forever,end_repeat,forever,repeat
+event:flag
+letter:lower_a,lower_d,lower_e,lower_i,lower_s,upper_D
+movement:backward,forward,left,right
+number:0,1,2,3,4,5,6,7,8,9
+operator:addition,division
+sensor:answer,question
+visual:erase,pen_down,pen_up

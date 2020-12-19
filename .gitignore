@@ -1,0 +1,7 @@
+venv/
+.idea/
+__pycache__/
+trained_models/*/
+dataset/*/
+node_modules/
+package*.json
