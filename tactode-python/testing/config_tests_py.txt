@@ -2,6 +2,7 @@ HOG
 #VGG16
 #VGG19
 #MobileNetV2
+#ResNet152
 #TM_CCOEFF
 #TM_SQDIFF
 #ORB

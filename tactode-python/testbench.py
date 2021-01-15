@@ -229,7 +229,8 @@ if test_quantity == "all":
         res_file_content = ""
         classif_method = m
         if classif_method == "HOG" \
-                or classif_method == "VGG16" or classif_method == "VGG19" or classif_method == "MobileNetV2"\
+                or classif_method == "VGG16" or classif_method == "VGG19"\
+                or classif_method == "MobileNetV2" or classif_method == "ResNet152"\
                 or classif_method == "YOLO" or classif_method == "SSD" \
                 or classif_method == "ORB" or classif_method == "SURF" or \
                 classif_method == "BRISK" or classif_method == "SIFT" or \
@@ -272,6 +273,11 @@ if test_quantity == "all":
                 mobilenetV2.load_classes()
                 # Load MobileNetV2 model
                 model = tf.keras.models.load_model(mobilenetV2.model_folder)
+            elif classif_method == "ResNet152":
+                resnet152 = params.ResNet152()
+                resnet152.load_classes()
+                # Load ResNet152 model
+                model = tf.keras.models.load_model(resnet152.model_folder)
             elif classif_method == "ORB" or classif_method == "BRISK" or \
                     classif_method == "SIFT" or classif_method == "SURF":
                 bf = cv.BFMatcher_create(normType=cv.NORM_HAMMING, crossCheck=True)
@@ -360,6 +366,9 @@ if test_quantity == "all":
                                                                                tf=tf)
                                 elif classif_method == "MobileNetV2":
                                     obtained_pieces = classification.run_mobilenet_v2(model=model, config=mobilenetV2,
+                                                                                      res=pipeline_res, tf=tf)
+                                elif classif_method == "ResNet152":
+                                    obtained_pieces = classification.run_resnet152(model=model, config=resnet152,
                                                                                       res=pipeline_res, tf=tf)
                                 elif classif_method == "YOLO":
                                     obtained_pieces = classification.run_yolo(net=yolo_net, config=yolo, res=pipeline_res)
@@ -463,7 +472,7 @@ if test_quantity == "all":
 elif test_quantity == "one":
     if len(sys.argv) != 4:
         print("\nERROR: You must specify the classification method "
-              "(HOG/YOLO/SSD/VGG16/VGG19/MobileNetV2/ORB/BRISK/SIFT/SURF/TM_CCOEFF/TM_SQDIFF) "
+              "(HOG/YOLO/SSD/VGG16/VGG19/MobileNetV2/ResNet152/ORB/BRISK/SIFT/SURF/TM_CCOEFF/TM_SQDIFF) "
               "and the image path!\n")
         exit(-1)
     else:
@@ -538,6 +547,17 @@ elif test_quantity == "one":
             obtained_pieces = classification.run_mobilenet_v2(
                 model=model,
                 config=mnetv2,
+                res=pipeline_res,
+                tf=tf
+            )
+        elif classif_method == 'ResNet152':
+            is_valid = True
+            resnet152 = params.ResNet152()
+            resnet152.load_classes()
+            model = tf.keras.models.load_model(resnet152.model_folder)
+            obtained_pieces = classification.run_resnet152(
+                model=model,
+                config=resnet152,
                 res=pipeline_res,
                 tf=tf
             )

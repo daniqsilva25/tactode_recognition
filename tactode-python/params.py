@@ -150,6 +150,18 @@ class MobileNetV2:
             self.classes = f.read().rstrip("\n").split("\n")
 
 
+class ResNet152:
+    def __init__(self):
+        self.classes_file = "../trained_models/resnet152/classes.txt"
+        self.model_folder = "../trained_models/resnet152/finetuned"
+        self.size = Size(w=224, h=224)
+        self.classes = ""
+
+    def load_classes(self):
+        with open(self.classes_file, "rt") as f:
+            self.classes = f.read().rstrip("\n").split("\n")
+
+
 class TemplateMatchFeatDetDesc:
     def __init__(self):
         self.folder = DATASET['templates']

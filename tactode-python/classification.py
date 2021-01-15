@@ -254,6 +254,34 @@ def run_mobilenet_v2(model, config, res, tf):
     return params.PiecesList(pieces_lst, num_pieces, is_rotated)
 
 
+def run_resnet152(model, config, res, tf):
+    rects_lst = res[0]
+    src_img = res[1]
+    is_rotated = res[2]
+    p_line = []
+    pieces_lst = []
+    num_pieces = 0
+    for r_line in rects_lst:
+        for r in r_line:
+            roi = src_img[r.y: r.y + r.height, r.x: r.x + r.width]
+            resized_roi = cv.resize(roi,
+                                    (config.size.width, config.size.height),
+                                    cv.INTER_CUBIC)
+            resized_roi = cv.cvtColor(resized_roi, cv.COLOR_BGR2RGB)
+            tensor = tf.convert_to_tensor(resized_roi, dtype=tf.float32)
+            tensor = tf.expand_dims(tensor, 0)
+            prediction = model.predict(tensor)
+            class_id = np.argmax(prediction)
+            num_pieces += 1
+            if prediction[0][class_id] > 0:
+                p_line.append(config.classes[class_id])
+            else:
+                p_line.append("--")
+        pieces_lst.append(p_line)
+        p_line = []
+    return params.PiecesList(pieces_lst, num_pieces, is_rotated)
+
+
 def run_template_matching(tm_type, config, res):
     rects_lst = res[0]
     src_img = res[1]
