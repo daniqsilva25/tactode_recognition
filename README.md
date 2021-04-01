@@ -23,3 +23,6 @@ Initially, Tactode relied on ArUco markers to perform the recognition of the til
 
 ### Related publications
 * [_J.Imaging - April 2021_](https://www.mdpi.com/2313-433X/7/4/65)
+
+### Demo video
+[![Watch the video](https://img.youtube.com/vi/AexTj4I-ry8/hqdefault.jpg)](https://youtu.be/AexTj4I-ry8)
